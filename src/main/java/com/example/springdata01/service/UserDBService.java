@@ -60,4 +60,9 @@ public class UserDBService implements IUserDBService{
         return (List<UserDB>) repo.findAll();
     }
 
+    @Override
+    public UserDB findByEmail(String email) {
+        return repo.findByEmail(email);
+    }
+
 }

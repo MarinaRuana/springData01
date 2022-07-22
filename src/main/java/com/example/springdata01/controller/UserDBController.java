@@ -24,6 +24,11 @@ public class UserDBController {
         return ResponseEntity.ok(service.getUserByID(id));
     }
 
+    @GetMapping("/email/{email}")
+    public ResponseEntity<UserDB> buscaPorEmail(@PathVariable String email){
+        return ResponseEntity.ok(service.findByEmail(email));
+    }
+
     @PostMapping
     public ResponseEntity<UserDB> insertUserDB(@RequestBody UserDB newUser){
         return ResponseEntity.status(HttpStatus.CREATED)

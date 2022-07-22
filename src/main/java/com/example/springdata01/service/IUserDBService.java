@@ -18,4 +18,6 @@ public interface IUserDBService {
     void deleteUserDB(long id);
 
     List<UserDB> findAll();
+
+    UserDB findByEmail(String email);
 }
