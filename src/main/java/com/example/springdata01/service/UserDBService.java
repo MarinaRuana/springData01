@@ -5,6 +5,7 @@ import com.example.springdata01.repository.IUserDBRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -33,6 +34,12 @@ public class UserDBService implements IUserDBService{
            repo.deleteById(id);
        }
        // TODO: throw Exception UserDBNotFound
+    }
+
+    @Override
+    public List<UserDB> findAll() {
+        // Metodo findAll() do CRUD retorna um Iterable, fazer cast para List;
+        return (List<UserDB>) repo.findAll();
     }
 
 }
