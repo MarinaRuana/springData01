@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @RestController
@@ -20,16 +21,11 @@ public class UserDBController {
 
     @GetMapping("/{id}")
     public ResponseEntity<UserDB> buscaPorId(@PathVariable long id){
-        Optional<UserDB> userFound = service.getUserByID(id);
-        if(userFound.isPresent()) {
-            return ResponseEntity.ok(userFound.get());
-        }
-        return ResponseEntity.notFound().build();
+        return ResponseEntity.ok(service.getUserByID(id));
     }
 
     @PostMapping
     public ResponseEntity<UserDB> insertUserDB(@RequestBody UserDB newUser){
-        // TODO: Validar se o user já possui ID: Disparar uma Exception
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(service.insertUser(newUser));
         // @PostMapping()
@@ -45,17 +41,22 @@ public class UserDBController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteUserDB(@PathVariable long id){
-       Optional<UserDB> userFound = service.getUserByID(id);
-
-       if(userFound.isPresent()){
-           service.deleteUserDB(id);
-           return ResponseEntity.noContent().build();
-       }
-       return ResponseEntity.notFound().build();
+        service.deleteUserDB(id);
+        return ResponseEntity.noContent().build();
     }
 
     @GetMapping("/all")
     public ResponseEntity<List<UserDB>> findAllUserDB(){
         return ResponseEntity.ok(service.findAll());
+    }
+
+    @PutMapping
+    public ResponseEntity<UserDB> updateUserDB(@RequestBody UserDB user) {
+        return ResponseEntity.ok(service.update(user));
+    }
+
+    @PatchMapping("/{id}")
+    public ResponseEntity<UserDB> updateUserDB(@PathVariable long id, @RequestBody Map<String, String> changes) {
+        return ResponseEntity.ok(service.updateParcial(id, changes));
     }
 }
